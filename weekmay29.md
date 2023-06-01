@@ -29,11 +29,11 @@
 
 # Issues
 
-    * When trying to run the models in jupyter notebook, (on my personal mac) I ran into several issues: 
-    *  The kernal kept dying, and when googling the error, it said that I could either have out of date software, there's an inifinite loop, 
-    or a variety of other issues. I could try to run on HPC, but don't want to put unecessary experimenting files. 
-    * syntaxError: invalid non-printable character U+200B
-    * The MPS backend is supported on MacOS 12.3+.Current OS version can be queried using `sw_vers` but this worked on collab. Also, I tried asking chat gpt and it suggested that i use torch. 
+When trying to run the models in jupyter notebook, (on my personal mac) I ran into several issues: 
+*  The kernal kept dying, and when googling the error, it said that I could either have out of date software, there's an inifinite loop, 
+    or a variety of other issues. I could try to run on HPC, but don't want to put unecessary experimentation files. 
+* syntaxError: invalid non-printable character U+200B
+* The MPS backend is supported on MacOS 12.3+.Current OS version can be queried using `sw_vers` but this worked on collab. Also, I tried asking chat gpt and it suggested that i use torch. 
 
 
 # Plans
