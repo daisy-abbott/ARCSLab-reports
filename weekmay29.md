@@ -29,7 +29,7 @@
 
 # Issues
 
-When trying to run the models in jupyter notebook, (on my personal mac) I ran into several issues: 
+    * When trying to run the models in jupyter notebook, (on my personal mac) I ran into several issues: 
     *  The kernal kept dying, and when googling the error, it said that I could either have out of date software, there's an inifinite loop, 
     or a variety of other issues. I could try to run on HPC, but don't want to put unecessary experimenting files. 
     * syntaxError: invalid non-printable character U+200B
