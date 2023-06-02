@@ -5,7 +5,7 @@
 | 5/30 | Installed VPN, connected to HPC, started fastai course
 | 5/29 | Continued with fastai, experimented in notebook
 | 6/1  | Group Meeting, set up report from template, UE tutorial, jupyter experiments 
-| 6/2 | [Quick notes for the day's work]
+| 6/2  | UE meeting, finalized report, explored different types of NN 
 
 
 # Activities
@@ -24,6 +24,11 @@
         * how to get the list of items
         * how to label these items
         * how to create the validation set
+* Started learning about unreal engine
+    * watched tutorial 
+    * met with Anjali, Chau, and Francisco, and learneed more about the process from Anjali. 
+
+
 
 
 
@@ -35,9 +40,10 @@ When trying to run the models in jupyter notebook, (on my personal mac) I ran in
 * syntaxError: invalid non-printable character U+200B
 * The MPS backend is supported on MacOS 12.3+.Current OS version can be queried using `sw_vers` but this worked on collab. Also, I tried asking chat gpt and it suggested that i use torch. 
 
-
+t
 # Plans
 
+* Update my software
 * Try to help with UE 
 * Continue learning about training models
 * Continue experimenting with notebook 
