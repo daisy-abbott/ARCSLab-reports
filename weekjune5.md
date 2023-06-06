@@ -9,5 +9,5 @@
 
 
 # Activities
-![handmade-full1](/Users/daisyabbott/Desktop/ARCS2023/weekly-update/handmadefull1.png )
+![handmadefull1](/Users/daisyabbott/Desktop/ARCS2023/weekly-update/handmadefull1.png)
 
