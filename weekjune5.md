@@ -15,8 +15,8 @@
 
 * Built a confusion matrix using old dataset
 
-<img width="1338" alt="handmadematrix3" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/24d6ac2e-f69c-4da5-bf39-1ab67116b758">
+<img width="500" alt="handmadematrix3" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/24d6ac2e-f69c-4da5-bf39-1ab67116b758">
 
 * Made an acuracy report using old dataset
 
-<img width="1322" alt="handmadematrix4" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/9d394290-6189-468e-85dc-94e4f8470826">
+<img width="500" alt="handmadematrix4" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/9d394290-6189-468e-85dc-94e4f8470826">
