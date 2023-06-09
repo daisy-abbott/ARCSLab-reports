@@ -6,7 +6,7 @@
 | 6/6  | Twinmotion vs. UE meeting, finished papers, started on building models using datasets
 | 6/7  | Fixed issues with training model, started reading about pair programming, researched confusion matrix and accuracy. 
 | 6/8  | Finished reading about pair programming, started reading research WriteUp, started researching about infernece.
-| 6/9  | Updated weekly report, tried to implement inference models using old datasets
+| 6/9  | Updated weekly report, followed fastai tutorial to classify painting vs. drawing
 
 
 # Activities
@@ -26,6 +26,13 @@
 
 * Read research papers and added questions to the doc
 
+* Read pair programming articles
+
+* Tried to make a model that classified art as painting or drawing which did not get great results 
+    * <img width="500" alt="paintingsvdrawings" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/04e5c69f-600c-4861-8e59-5e591cb477db">
+    * confusion matrix of this 
+    * <img width="772" alt="Screenshot 2023-06-09 at 12 19 09 PM" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/89dbbd92-49d1-4b9e-a355-4730c4d583e0">
+
 # Issues
 * I think the data analysis from confusion matrix and accuracy report contradict each other. 
 
@@ -33,8 +40,21 @@ In the confusion matrix, we see that the model is really good at predicted forwa
 
 However the data from the classification report seem to somewhat contradict these this. The overall accuracy was 91% but the precision for forward was tied with that of right, and both were worse than left. Which seems odd but I may also just not be understanding conceptually. 
 
+* Ran into an issue with the painting vs. drawing and was recieving a cannot diplay batch because it is empty error and Anjali's code was super helpful in solving. And then also the acuracy was just really bad. 
+
 # Plans 
 * Continue looking at new models and experimenting with them. 
 
 # Articlese
+
+* Investigating Neural Network Techniques 
+lots of questions on this one, very intersting to use prior command in helping decision making of next one.
+
+* Pair Programming, helpful documentation for how ot use live share in VScode as well as solidifying the driver/navigator partnership
+
+
+
+
+
+
 
