@@ -31,14 +31,10 @@
 * Tried to make a model that classified art as painting or drawing which did not get great results 
     * <img width="500" alt="paintingsvdrawings" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/04e5c69f-600c-4861-8e59-5e591cb477db">
     * confusion matrix of this 
-    * <img width="772" alt="Screenshot 2023-06-09 at 12 19 09 PM" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/89dbbd92-49d1-4b9e-a355-4730c4d583e0">
+    * <img width="500" alt="Screenshot 2023-06-09 at 12 19 09 PM" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/89dbbd92-49d1-4b9e-a355-4730c4d583e0">
 
 # Issues
-* I think the data analysis from confusion matrix and accuracy report contradict each other. 
-
-In the confusion matrix, we see that the model is really good at predicted forward when it should be forward, but there were 174 instances that it predicted forward when it should have been left, 146 instances where it predicted forward when it should have been right. There were also a number of times when the model predicted left or right when it should have been forward. Luckily it seldem predicted left when it should be right and vice versa. 
-
-However the data from the classification report seem to somewhat contradict these this. The overall accuracy was 91% but the precision for forward was tied with that of right, and both were worse than left. Which seems odd but I may also just not be understanding conceptually. 
+* I think the data analysis from confusion matrix and accuracy report contradict each other. In the confusion matrix, we see that the model is really good at predicted forward when it should be forward, but there were 174 instances that it predicted forward when it should have been left, 146 instances where it predicted forward when it should have been right. There were also a number of times when the model predicted left or right when it should have been forward. Luckily it seldem predicted left when it should be right and vice versa. However the data from the classification report seem to somewhat contradict these this. The overall accuracy was 91% but the precision for forward was tied with that of right, and both were worse than left. Which seems odd but I may also just not be understanding conceptually. 
 
 * Ran into an issue with the painting vs. drawing and was recieving a cannot diplay batch because it is empty error and Anjali's code was super helpful in solving. And then also the acuracy was just really bad. 
 
