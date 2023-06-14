@@ -16,7 +16,7 @@
 
 * Built a confusion matrix using old dataset
 
-    * <img width="500" alt="handmadematrix3" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/24d6ac2e-f69c-4da5-bf39-1ab67116b758">
+    * <img width="500" alt="handmadematrix3" src="https://github.com/daisy-abbott/ARCSLab-reports/assets/112681549/b351554e-0da7-410b-92f7-09a9dc60708f">
 
 * Made an acuracy report using old dataset
 
