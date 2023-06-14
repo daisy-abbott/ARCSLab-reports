@@ -20,8 +20,7 @@
 
 * Made an acuracy report using old dataset
 
-    * <img width="500" alt="handmadematrix4" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/9d394290-6189-468e-85dc-94e4f8470826">
-
+    * <img width="500" alt="handmadematrix4" src="https://github.com/daisy-abbott/ARCSLab-reports/assets/112681549/06130abd-802e-4a63-806d-528cff26525e">
 * Started to add suggestions to Research Write UP
 
 * Read research papers and added questions to the doc
@@ -29,9 +28,9 @@
 * Read pair programming articles
 
 * Tried to make a model that classified art as painting or drawing which did not get great results 
-    * <img width="500" alt="paintingsvdrawings" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/04e5c69f-600c-4861-8e59-5e591cb477db">
+    * <img width="500" alt="paintingsvdrawings" src="https://github.com/daisy-abbott/ARCSLab-reports/assets/112681549/c47e38aa-ccc2-4f49-ac37-86d02b41c6d9">
     * confusion matrix of this 
-    * <img width="500" alt="Screenshot 2023-06-09 at 12 19 09 PM" src="https://github.com/daisy-abbott/weekly-update/assets/112681549/89dbbd92-49d1-4b9e-a355-4730c4d583e0">
+    * <img width="500" alt="Screenshot 2023-06-09 at 12 19 09 PM" src="https://github.com/daisy-abbott/ARCSLab-reports/assets/112681549/89dbbd92-49d1-4b9e-a355-4730c4d583e0">
 
 # Issues
 * I think the data analysis from confusion matrix and accuracy report contradict each other. In the confusion matrix, we see that the model is really good at predicted forward when it should be forward, but there were 174 instances that it predicted forward when it should have been left, 146 instances where it predicted forward when it should have been right. There were also a number of times when the model predicted left or right when it should have been forward. Luckily it seldem predicted left when it should be right and vice versa. However the data from the classification report seems to somewhat contradict this. The overall accuracy was 91% but the precision for forward was tied with that of right, and both were worse than left. Which seems odd but I may also just not be understanding conceptually. 
