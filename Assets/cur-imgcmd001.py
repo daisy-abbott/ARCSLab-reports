@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+
 import matplotlib.pyplot as plt
 import pathlib
 from os import path
@@ -25,29 +26,39 @@ dataset_path = artifact_dir + '/'   # Path to the extracted images from the arti
 from torch.utils.data import Dataset
 
 # Constants 
-# Load the dataset artifact
-
 NUM_REPLICATES = 2
 NUM_EPOCHS = 1
-# DATASET_DIR = Path("/data/clark/summer2021/datasets")
+
+# Load the dataset artifact
 DATASET_DIR = Path(dataset_path)
 MODEL_PATH_REL_TO_DATASET = Path("cmd_models_fixed")
 DATA_PATH_REL_TO_DATASET = Path("cmd_data_fixed")
-# VALID_MAZE_DIR = Path("../Mazes/validation_mazes8x8/")
 
+# Archetecture models (can add to this)
 compared_models = {
     "resnet18": resnet18,
     "resnet34": resnet34
 }
 
+
 def filename_to_class(filename: str) -> str:
+    """
+    Extracts the label from the filename of an image.
+    
+    Args:
+        filename (str): The filename of the image.
+        
+    Returns:
+        str: The label ('left', 'forward', 'right') based on the angle value in the filename.
+        
+    """
     filename_str = str(filename)
-    # For regular filenames with angle values
+    # For regular filenames with angle values:
     angle = float(filename_str.split("/")[-1].split("_")[2].split(".")[0].replace("p", "."))
-    # -5 and 5 is still forwrad, keep the window for going forward larger
-    if angle > 0:
+    # if angle is outside of -5 and 5 degrees (0.0872665 radians), continue to move forwrad to keep the robot in a forward trajectory 
+    if angle > 0.0872665:
         return "left"
-    elif angle < 0:
+    elif angle < -0.0872665:
         return "right"
     else:
         return "forward"
@@ -110,16 +121,33 @@ class ImageWithCmdDataset(Dataset):
         # Data and the label associated with that data
         return (img, cmd), label
 
-class cmd_model(nn.Module):
-    def __init__(self, arch: str, pretrained: bool):
-        super(cmd_model, self).__init__()
+class CommandModel(nn.Module):
+     """
+        Initializes the CommandModel class.
+
+        Args:
+            arch (str): The model architecture to use ('resnet18' or 'resnet34').
+            pretrained (bool): If True, uses a pretrained version of the model.
+        """
+     def __init__(self, arch: str, pretrained: bool):
+        super(CommandModel, self).__init__()
         self.cnn = arch(pretrained=pretrained)
         
         self.fc1 = nn.Linear(self.cnn.fc.out_features + 1, 512)
         self.r1 = nn.ReLU(inplace=True)
         self.fc2 = nn.Linear(512, 3)
-        
-    def forward(self, data):
+
+     def forward(self, data):
+        """
+         Performs a forward pass through the model.
+
+        Args:
+            data (tuple): A tuple containing image data and command data.
+
+        Returns:
+            torch.Tensor: The output tensor from the model.
+        """
+    
         # Unpack the data as image and command
         img, cmd = data
         # Pass the image data to the cnn
@@ -135,11 +163,35 @@ class cmd_model(nn.Module):
         return x
 
 def get_fig_filename(prefix: str, label: str, ext: str, rep: int) -> str:
+    """
+     Generate a filename for saving figures.
+
+    Args:
+        prefix (str): Prefix for the filename.
+        label (str): Label to include in the filename.
+        ext (str): Extension for the filename (e.g., "png").
+        rep (int): Replicate number.
+
+    Returns:
+        str: The generated filename."""
+    
     fig_filename = f"{prefix}-{label}-{rep}.{ext}"
     print(label, "filename :", fig_filename)
     return fig_filename
 
 def prepare_dataloaders(dataset_name: str, prefix: str, valid_pct: float, img_size: int) -> DataLoaders:
+    """
+      Prepare dataloaders for training and validation.
+
+    Args:
+        dataset_name (str): Name of the dataset.
+        prefix (str): Prefix for figure filenames.
+        valid_pct (float): Validation percentage. (currently using 0.05)
+        img_size (int): The size of the image to resize. (currently using 224)
+
+    Returns:
+        Training and validation dataloaders.
+    """
     
     path = DATASET_DIR / dataset_name
     files = get_image_files(path)
@@ -163,7 +215,6 @@ def prepare_dataloaders(dataset_name: str, prefix: str, valid_pct: float, img_si
     
     # Create training and validation datasets
     train_data = ImageWithCmdDataset(train_filenames, img_size)
-#     train_data.__get_item__(10)
     val_data = ImageWithCmdDataset(val_filenames, img_size)
     
     # Get DataLoader
@@ -183,8 +234,20 @@ def train_model(
     prefix: str,
     rep: int,
 ):
+    """
+    Train the cmd_model using the provided data and hyperparameters.
+
+    Args:
+        dls (DataLoaders): Training and validation dataloaders.
+        model_arch (str): Model architecture ('resnet18' or 'resnet34').
+        pretrained (bool): If True, use a pretrained model.
+        logname (Path): Path to save the training log.
+        modelname (Path): Path to save the trained model.
+        prefix (str): Prefix for figure filenames.
+        rep (int): Replicate number.
+    """
     arch = compared_models[model_arch]
-    net = cmd_model(arch, pretrained=pretrained)
+    net = CommandModel(arch, pretrained=pretrained)
     
     learn = Learner(
         dls,
@@ -208,7 +271,10 @@ def train_model(
     
 
 def main():
-
+    """
+     Main function to train img cmd classification using command-line arguments.
+    """
+    # command line args for model, dataset name, pretrained, GPU, validation percent, and image size 
     arg_parser = ArgumentParser("Train cmd classification networks.")
     arg_parser.add_argument(
         "model_arch", help="Model architecture (see code for options)"
@@ -231,9 +297,6 @@ def main():
 
     args = arg_parser.parse_args()
 
-    # TODO: not using this (would require replacing first layer)
-    # rgb_instead_of_gray = True
-
     # Assign GPU:
     torch.cuda.set_device(int(args.gpu))
     print("Running on GPU: " + str(torch.cuda.current_device()))
@@ -248,6 +311,7 @@ def main():
     print(f"Created data dir (or it already exists)  : '{data_dir}'")
 
     file_prefix = "classification-" + args.model_arch
+    
     # file_prefix += "-rgb" if rgb_instead_of_gray else "-gray"
     file_prefix += "-pretrained" if args.pretrained else "-notpretrained"
     fig_filename_prefix = data_dir / file_prefix
