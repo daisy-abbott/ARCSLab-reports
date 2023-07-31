@@ -8,6 +8,9 @@ from fastai.vision.all import *
 from fastai.callback.progress import CSVLogger
 
 import wandb
+"""
+Creating a model using an image combined with a previous command and uploading this model as an artifact to wandb.
+"""
 
 # Initialize W&B run (if not already initialized)
 run = wandb.init(
