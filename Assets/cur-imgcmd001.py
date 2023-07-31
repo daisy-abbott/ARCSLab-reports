@@ -1,7 +1,4 @@
-
-
 from argparse import ArgumentParser
-
 import matplotlib.pyplot as plt
 import pathlib
 from os import path
@@ -13,9 +10,9 @@ import wandb
 
 # Initialize W&B run (if not already initialized)
 run = wandb.init(
-    project="random_false_perfect_img-cmd",
+    project="random_false_perfect_img-cmd-cur",
     entity="arcslaboratory",
-    notes="Testing on 2k images.",
+    notes="without callback, testing on 2k images.",
     job_type="dataset-upload"
 )
 
@@ -197,16 +194,17 @@ def train_model(
         cbs=CSVLogger(fname=logname),
     )
 
+    
     if pretrained:
         learn.fine_tune(NUM_EPOCHS)
     else:
         learn.fit_one_cycle(NUM_EPOCHS)
 
-    # Save trained model
-    # torch.save(net, modelname)
+  # Save trained model
+    torch.save(net.state_dict(), modelname)  # Save only the model's state_dict
     
-    #export model
-    learn.export(modelname)
+    # Remove callback function
+    learn.remove_cb(CSVLogger)
     
 
 def main():
@@ -279,7 +277,7 @@ def main():
 
         # Create the artifact to save the models
         artifact = wandb.Artifact(
-        name="07-27-img-cmd-2k",
+        name="07-31-img-cmd-2k",
         type="model"
         )
 
