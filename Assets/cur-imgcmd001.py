@@ -46,13 +46,11 @@ compared_models = {
 
 def filename_to_class(filename: str) -> str:
     """
-    Extracts the label from the filename of an image.
+    Extracts the direction label from the filename of an image.
     
-    Args:
-        filename (str): The filename of the image.
+    :param filename (str): The filename of the image.
         
-    Returns:
-        str: The label ('left', 'forward', 'right') based on the angle value in the filename.
+    :return: str: The label ('left', 'forward', 'right') based on the angle value in the filename.
         
     """
     filename_str = str(filename)
@@ -70,8 +68,9 @@ def filename_to_class(filename: str) -> str:
 class ImageWithCmdDataset(Dataset):
     def __init__(self, filenames, img_size):
         """
-        Creates objects for class labels, class indices, and filenames.
-        :param filenames: (list) a list of filenames that make up the dataset
+        Creates objects for the direction labels, indices, and filenames.
+        :param filenames: (list) a list of filenames that make up the dataset.
+        :param img_size: (int) an integer for the size of the image passed in as an argument through command line
         """
         self.class_labels = ['left', 'forward', 'right']
         self.class_indices = {lbl:i for i, lbl in enumerate(self.class_labels)} # {'left': 0, 'forward': 1, 'right': 2}
@@ -88,9 +87,8 @@ class ImageWithCmdDataset(Dataset):
 
     def __getitem__(self, index):
         """
-        Gets the filename associated with the given index, opens the image at
-        that index, then uses the image's filename to get information associated
-        with the image such as its label and the label of the previous image.
+        Gets the filename associated with the given index,
+        and grabs the label of the current image and the label of the previous image.
         
         :param index: (int) number that represents the location of the desired data
         :return: (tuple) tuple of all the information associated with the desired data
@@ -125,30 +123,28 @@ class ImageWithCmdDataset(Dataset):
         return (img, cmd), label
 
 class CommandModel(nn.Module):
-     """
+    """
         Initializes the CommandModel class.
 
-        Args:
-            arch (str): The model architecture to use ('resnet18' or 'resnet34').
-            pretrained (bool): If True, uses a pretrained version of the model.
-        """
-     def __init__(self, arch: str, pretrained: bool):
+        :param arch (str): The model architecture to use ('resnet18' or 'resnet34').
+        :param  pretrained (bool): If True, uses a pretrained version of the model.
+    """
+        
+    def __init__(self, arch: str, pretrained: bool):
         super(CommandModel, self).__init__()
         self.cnn = arch(pretrained=pretrained)
         
         self.fc1 = nn.Linear(self.cnn.fc.out_features + 1, 512)
         self.r1 = nn.ReLU(inplace=True)
         self.fc2 = nn.Linear(512, 3)
-
-     def forward(self, data):
+        
+    def forward(self, data):
         """
          Performs a forward pass through the model.
 
-        Args:
-            data (tuple): A tuple containing image data and command data.
+        :param data (tuple): A tuple containing image data and command data.
 
-        Returns:
-            torch.Tensor: The output tensor from the model.
+        :return: torch.Tensor: The output tensor from the model.
         """
     
         # Unpack the data as image and command
@@ -169,14 +165,12 @@ def get_fig_filename(prefix: str, label: str, ext: str, rep: int) -> str:
     """
      Generate a filename for saving figures.
 
-    Args:
-        prefix (str): Prefix for the filename.
-        label (str): Label to include in the filename.
-        ext (str): Extension for the filename (e.g., "png").
-        rep (int): Replicate number.
+    :param prefix (str): Prefix for the filename.
+    :param label (str): Label to include in the filename.
+    :param ext (str): Extension for the filename (e.g., "png").
+    :param rep (int): Replicate number.
 
-    Returns:
-        str: The generated filename."""
+    :return str: The generated filename."""
     
     fig_filename = f"{prefix}-{label}-{rep}.{ext}"
     print(label, "filename :", fig_filename)
@@ -184,16 +178,14 @@ def get_fig_filename(prefix: str, label: str, ext: str, rep: int) -> str:
 
 def prepare_dataloaders(dataset_name: str, prefix: str, valid_pct: float, img_size: int) -> DataLoaders:
     """
-      Prepare dataloaders for training and validation.
+    Prepare dataloaders for training and validation.
 
-    Args:
-        dataset_name (str): Name of the dataset.
-        prefix (str): Prefix for figure filenames.
-        valid_pct (float): Validation percentage. (currently using 0.05)
-        img_size (int): The size of the image to resize. (currently using 224)
+    :param dataset_name (str): Name of the dataset.
+    :param prefix (str): Prefix for figure filenames.
+    :param valid_pct (float): Validation percentage. (currently using 0.05)
+    :param img_size (int): The size of the image to resize. (currently using 224)
 
-    Returns:
-        Training and validation dataloaders.
+    :return: Training and validation dataloaders.
     """
     
     path = DATASET_DIR / dataset_name
@@ -266,11 +258,14 @@ def train_model(
     else:
         learn.fit_one_cycle(NUM_EPOCHS)
 
-  # Save trained model
-    torch.save(net.state_dict(), modelname)  # Save only the model's state_dict
+    #Save trained model
+    # torch.save(net.state_dict(), modelname)  # Save only the model's state_dict
     
     # Remove callback function
     learn.remove_cb(CSVLogger)
+    
+    # export the model
+    learn.export(modelname)
     
 
 def main():
@@ -344,7 +339,7 @@ def main():
 
         # Create the artifact to save the models
         artifact = wandb.Artifact(
-        name="07-31-img-cmd-2k",
+        name="08-01-img-cmd-2k",
         type="model"
         )
 
